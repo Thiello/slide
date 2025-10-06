@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slider Infantil</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:sans-serif;background:#111;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}
+
+  .slider{position:relative;width:90%;max-width:800px;overflow:hidden;border-radius:10px;background:#000}
+
+  .slide{position:absolute;top:0;left:0;width:100%;opacity:0;transition:opacity 1s ease-in-out}
+  .slide.is-active{opacity:1;position:relative}
+
+  .slide img{width:100%;height:auto;display:block}
+
+  .content{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);text-align:center;z-index:5}
+  .kicker{background:rgba(255,255,255,0.1);padding:0.3rem 0.7rem;border-radius:20px;margin-bottom:0.5rem;display:inline-block;font-weight:bold}
+  h1{font-size:1.5rem;margin-bottom:0.3rem}
+  p{font-size:1rem}
+
+  .nav{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 10px;pointer-events:none;z-index:10}
+  .nav button{pointer-events:auto;background:rgba(0,0,0,0.4);border:none;color:#fff;padding:0.5rem 1rem;border-radius:50%;cursor:pointer;font-size:1.2rem}
+  .nav button:hover{background:rgba(0,0,0,0.6)}
+
+  .dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:10}
+  .dots button{width:12px;height:12px;border-radius:50%;border:none;background:rgba(255,255,255,0.3);cursor:pointer}
+  .dots button.is-active{background:linear-gradient(90deg,#ff9a9e,#ffd6a5)}
+
+  @media(max-width:720px){
+    h1{font-size:1.2rem}
+    p{font-size:0.9rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="slider" id="slider">
+  <div class="slide is-active"><img src="images/slide1.jpeg" alt="Slide 1">
+    <div class="content">
+      <div class="kicker">Decorações temáticas</div>
+      <h1>Festas infantis que encantam</h1>
+      <p>Balões, personagens e mesas decoradas para encantar seus convidados.</p>
+    </div>
+  </div>
+  <div class="slide"><img src="images/slide2.jpeg" alt="Slide 2">
+    <div class="content">
+      <div class="kicker">Temas exclusivos</div>
+      <h1>Decoração personalizada</h1>
+      <p>Princesas, Super-heróis, Circo e muito mais!</p>
+    </div>
+  </div>
+  <div class="slide"><img src="images/slide3.jpeg" alt="Slide 3">
+    <div class="content">
+      <div class="kicker">Pacotes completos</div>
+      <h1>Transforme o espaço em magia</h1>
+      <p>Montagem, desmontagem e equipe qualificada — tudo para sua festa!</p>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button id="prev">◀</button>
+    <button id="next">▶</button>
+  </div>
+
+  <div class="dots" id="dots"></div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const dotsContainer = document.getElementById('dots');
+let index = 0;
+let interval;
+
+// Criar os dots
+slides.forEach((_, i)=>{
+  const dot = document.createElement('button');
+  if(i===0) dot.classList.add('is-active');
+  dot.addEventListener('click', ()=>goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+const dots = dotsContainer.querySelectorAll('button');
+
+function showSlide(i){
+  slides.forEach((s, idx)=>{
+    s.classList.toggle('is-active', idx===i);
+    dots[idx].classList.toggle('is-active', idx===i);
+  });
+}
+
+function nextSlide(){
+  index = (index+1)%slides.length;
+  showSlide(index);
+}
+
+function prevSlide(){
+  index = (index-1+slides.length)%slides.length;
+  showSlide(index);
+}
+
+function goToSlide(i){
+  index = i;
+  showSlide(index);
+  resetInterval();
+}
+
+prevBtn.addEventListener('click', ()=>{
+  prevSlide();
+  resetInterval();
+});
+nextBtn.addEventListener('click', ()=>{
+  nextSlide();
+  resetInterval();
+});
+
+function startAuto(){
+  interval = setInterval(nextSlide,2000);
+}
+
+function resetInterval(){
+  clearInterval(interval);
+  startAuto();
+}
+
+startAuto();
+</script>
+</body>
+</html>
