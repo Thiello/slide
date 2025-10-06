@@ -1,295 +1,231 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slider Infantil</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      font-family: sans-serif;
-      background: #111;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slider Infantil Moderno</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(120deg,#f0f0f0,#d9d9d9);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+  }
 
-    .slider {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background: #000;
-    }
+  .slider {
+    position: relative;
+    width:90%;
+    max-width:1000px;
+    height:70vh;
+    overflow:hidden;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  }
 
-    .slide {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
+  .slide {
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    opacity:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    transition: opacity 1s ease;
+  }
 
-    .slide.is-active {
-      opacity: 1;
-      position: relative;
-      z-index: 2;
-    }
+  .slide.is-active {
+    opacity:1;
+    z-index:2;
+  }
 
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+  .slide img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:15px;
+    transition: transform 1s ease;
+  }
 
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      z-index: 1;
-    }
+  .slide.is-active img {
+    transform: scale(1);
+  }
 
-    .content {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      z-index: 5;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 1rem;
-      border-radius: 10px;
-      animation: fadeInUp 1s ease forwards;
-      opacity: 0;
-    }
+  /* Frase centralizada */
+  .phrase {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0.8);
+    background:rgba(0,0,0,0.3);
+    padding:2rem 3rem;
+    border-radius:15px;
+    text-align:center;
+    color:#fff;
+    max-width:80%;
+    opacity:0;
+    animation: fadeZoom 1s forwards;
+  }
 
-    .slide.is-active .content {
-      opacity: 1;
-    }
+  .slide.is-active .phrase {
+    animation: fadeZoom 1s forwards;
+  }
 
-    @keyframes fadeInUp {
-      from {
-        transform: translate(-50%, 20px);
-        opacity: 0;
-      }
-      to {
-        transform: translate(-50%, 0);
-        opacity: 1;
-      }
-    }
+  .phrase .kicker {
+    font-weight:700;
+    font-size:1.5rem;
+    color:#ffd700;
+    margin-bottom:0.5rem;
+    letter-spacing:1px;
+  }
 
-    .kicker {
-      background: rgba(255,255,255,0.1);
-      padding: 0.3rem 0.7rem;
-      border-radius: 20px;
-      margin-bottom: 0.5rem;
-      display: inline-block;
-      font-weight: bold;
-      color: #ff9a9e;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-    }
+  .phrase h1 {
+    font-size:3rem;
+    margin-bottom:0.5rem;
+    font-weight:700;
+    line-height:1.2;
+  }
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.3rem;
-      color: #ffd6a5;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-    }
+  .phrase p {
+    font-size:1.2rem;
+    line-height:1.4;
+  }
 
-    p {
-      font-size: 1rem;
-      color: #fff;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-    }
+  @keyframes fadeZoom {
+    0% { opacity:0; transform:translate(-50%,-50%) scale(0.6); }
+    100% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  }
 
-    .nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 10px;
-      pointer-events: none;
-      z-index: 10;
-    }
+  /* Navegação */
+  .nav {
+    position:absolute;
+    top:50%;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:0 15px;
+    z-index:10;
+  }
 
-    .nav button {
-      pointer-events: auto;
-      background: rgba(0,0,0,0.4);
-      border: none;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.2rem;
-    }
+  .nav button {
+    background:rgba(0,0,0,0.3);
+    border:none;
+    color:#fff;
+    font-size:1.5rem;
+    padding:0.5rem 1rem;
+    border-radius:50%;
+    cursor:pointer;
+    transition:0.3s;
+  }
 
-    .nav button:hover {
-      background: rgba(0,0,0,0.6);
-    }
+  .nav button:hover {
+    background:rgba(0,0,0,0.6);
+  }
 
-    .dots {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 5px;
-      z-index: 10;
-    }
+  /* Pontinhos */
+  .dots {
+    position:absolute;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:10px;
+    z-index:10;
+  }
 
-    .dots button {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,0.3);
-      cursor: pointer;
-    }
+  .dots button {
+    width:12px; height:12px;
+    border-radius:50%;
+    border:none;
+    background:rgba(255,255,255,0.5);
+    cursor:pointer;
+    transition:0.3s;
+  }
 
-    .dots button.is-active {
-      background: linear-gradient(90deg,#ff9a9e,#ffd6a5);
-    }
+  .dots button.is-active {
+    background:#ffd700;
+    transform:scale(1.2);
+  }
 
-    @media(max-width:720px){
-      h1 { font-size: 1.2rem; }
-      p { font-size: 0.9rem; }
-    }
-  </style>
+  @media(max-width:768px){
+    .phrase h1 { font-size:2rem; }
+    .phrase p { font-size:1rem; }
+    .phrase { padding:1.5rem 2rem; }
+  }
+
+</style>
 </head>
 <body>
 
 <div class="slider" id="slider">
-  <!-- Slide 1 -->
-  <div class="slide is-active">
-    
-    <img src="slide1.jpeg" alt="Slide 1">
-    <div class="content">
-      <div class="kicker">Decorações temáticas</div>
-      <h1>Festas que encantam</h1>
-      <p>Balões, personagens e mesas decoradas para encantar seus convidados.</p>
-    </div>
-  </div>
-
-  <!-- Slide 2 -->
+  <div class="slide is-active"><img src="images/slide1.jpeg" alt="Slide 1"></div>
   <div class="slide">
-    
-    <img src="slide2.jpeg" alt="Slide 2">
-    <div class="content">
-      <div class="kicker">Temas exclusivos</div>
-      <h1>Decoração personalizada</h1>
-      <p>Princesas, Super-heróis, Circo e muito mais!</p>
+    <div class="phrase">
+      <div class="kicker">Decoração Criativa</div>
+      <h1>Festas que Encantam</h1>
+      <p>Balões, personagens e mesas decoradas para momentos inesquecíveis.</p>
     </div>
   </div>
-
-  <!-- Slide 3 -->
+  <div class="slide"><img src="images/slide2.jpeg" alt="Slide 2"></div>
   <div class="slide">
-    
-    <img src="slide3.jpeg" alt="Slide 3">
-    <div class="content">
-      <div class="kicker">Pacotes completos</div>
-      <h1>Transforme o espaço em magia</h1>
-      <p>Montagem, desmontagem e equipe qualificada — tudo para sua festa!</p>
+    <div class="phrase">
+      <div class="kicker">Momentos Únicos</div>
+      <h1>Decoração Personalizada</h1>
+      <p>Transformamos sua festa em uma experiência mágica e inesquecível!</p>
     </div>
   </div>
+  <div class="slide"><img src="images/slide3.jpeg" alt="Slide 3"></div>
 
-  <!-- Slide 4 -->
-  <div class="slide">
-    
-    <img src="slide4.jpeg" alt="Slide 4">
-    <div class="content">
-      <div class="kicker">Ambientes encantadores</div>
-      <h1>Detalhes que fazem a diferença</h1>
-      <p>Cada cantinho pensado com carinho para surpreender.</p>
-    </div>
-  </div>
-
-  <!-- Slide 5 -->
-  <div class="slide">
-    
-    <img src="slide5.jpeg" alt="Slide 5">
-    <div class="content">
-      <div class="kicker">Momentos inesquecíveis</div>
-      <h1>Seu sonho, nossa missão</h1>
-      <p>Transformamos ideias em experiências memoráveis.</p>
-    </div>
-  </div>
-
-  <!-- Navegação -->
   <div class="nav">
     <button id="prev">◀</button>
     <button id="next">▶</button>
   </div>
 
-  <!-- Dots -->
   <div class="dots" id="dots"></div>
 </div>
 
 <script>
-  const slides = document.querySelectorAll('.slide');
-  const prevBtn = document.getElementById('prev');
-  const nextBtn = document.getElementById('next');
-  const dotsContainer = document.getElementById('dots');
-  let index = 0;
-  let interval;
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const dotsContainer = document.getElementById('dots');
+let index = 0;
+let interval;
 
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    if (i === 0) dot.classList.add('is-active');
-    dot.addEventListener('click', () => goToSlide(i));
-    dotsContainer.appendChild(dot);
+// Criar dots
+slides.forEach((_, i)=>{
+  const dot = document.createElement('button');
+  if(i===0) dot.classList.add('is-active');
+  dot.addEventListener('click', ()=> goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+const dots = dotsContainer.querySelectorAll('button');
+
+// Mostrar slide
+function showSlide(i){
+  slides.forEach((s, idx)=>{
+    s.classList.toggle('is-active', idx===i);
+    dots[idx].classList.toggle('is-active', idx===i);
   });
+}
 
-  const dots = dotsContainer.querySelectorAll('button');
+// Próximo/Anterior
+function nextSlide(){ index=(index+1)%slides.length; showSlide(index);}
+function prevSlide(){ index=(index-1+slides.length)%slides.length; showSlide(index);}
+function goToSlide(i){ index=i; showSlide(index); resetInterval(); }
 
-  function showSlide(i) {
-    slides.forEach((s, idx) => {
-      s.classList.toggle('is-active', idx === i);
-      dots[idx].classList.toggle('is-active', idx === i);
-    });
-  }
+// Botões
+prevBtn.addEventListener('click', ()=>{ prevSlide(); resetInterval(); });
+nextBtn.addEventListener('click', ()=>{ nextSlide(); resetInterval(); });
 
-  function nextSlide() {
-    index = (index + 1) % slides.length;
-    showSlide(index);
-  }
-
-  function prevSlide() {
-    index = (index - 1 + slides.length) % slides.length;
-    showSlide(index);
-  }
-
-  function goToSlide(i) {
-    index = i;
-    showSlide(index);
-    resetInterval();
-  }
-
-  prevBtn.addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-  });
-
-  nextBtn.addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
-  });
-
-  function startAuto() {
-    interval = setInterval(nextSlide, 4000);
-  }
-
-  function resetInterval() {
-    clearInterval(interval);
-    startAuto();
-  }
-
-  startAuto();
+// Auto play
+function startAuto(){ interval = setInterval(nextSlide, 4000); }
+function resetInterval(){ clearInterval(interval); startAuto(); }
+startAuto();
 </script>
+
 </body>
-</
+</html>
