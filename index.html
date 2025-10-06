@@ -3,181 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slider Infantil Moderno</title>
+<title>Adrea Leal Festas - Decorações Inesquecíveis</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(120deg,#f0f0f0,#d9d9d9);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #000;
+    overflow: hidden;
   }
 
   .slider {
     position: relative;
-    width:90%;
-    max-width:1000px;
-    height:70vh;
-    overflow:hidden;
-    border-radius:15px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
   }
 
   .slide {
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    opacity:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    transition: opacity 1s ease;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease;
   }
 
   .slide.is-active {
-    opacity:1;
-    z-index:2;
+    opacity: 1;
+    z-index: 2;
   }
 
   .slide img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:15px;
-    transition: transform 1s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 8s ease;
   }
 
-  ..is-active img {
-    transform: scale(1);
+  .slide.is-active img {
+    transform: scale(1.05);
   }
 
-  /* Frase centralizada */
-  .phrase {
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) scale(0.8);
-    background:rgba(0,0,0,0.3);
-    padding:2rem 3rem;
-    border-radius:15px;
-    text-align:center;
-    color:#fff;
-    max-width:80%;
-    opacity:0;
-    animation: fadeZoom 1s forwards;
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    max-width: 80%;
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
   }
 
-  .slide.is-active .phrase {
-    animation: fadeZoom 1s forwards;
+  .slide.is-active .content {
+    opacity: 1;
   }
 
-  .phrase .kicker {
-    font-weight:700;
-    font-size:1.5rem;
-    color:#ffd700;
-    margin-bottom:0.5rem;
-    letter-spacing:1px;
+  .content h1 {
+    font-size: 3.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 215, 0, 0.3);
   }
 
-  .phrase h1 {
-    font-size:3rem;
-    margin-bottom:0.5rem;
-    font-weight:700;
-    line-height:1.2;
+  .content p {
+    font-size: 1.3rem;
+    font-weight: 300;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: #f8f8f8;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.8), 0 0 6px rgba(255, 215, 0, 0.25);
   }
 
-  .phrase p {
-    font-size:1.2rem;
-    line-height:1.4;
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
   }
 
-  @keyframes fadeZoom {
-    0% { opacity:0; transform:translate(-50%,-50%) scale(0.6); }
-    100% { opacity:1; transform:translate(-50%,-50%) scale(1); }
-  }
-
-  /* Navegação */
   .nav {
-    position:absolute;
-    top:50%;
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    padding:0 15px;
-    z-index:10;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 10;
   }
 
   .nav button {
-    background:rgba(0,0,0,0.3);
-    border:none;
-    color:#fff;
-    font-size:1.5rem;
-    padding:0.5rem 1rem;
-    border-radius:50%;
-    cursor:pointer;
-    transition:0.3s;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    font-size: 1.8rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
   }
 
   .nav button:hover {
-    background:rgba(0,0,0,0.6);
+    background: rgba(255,255,255,0.4);
   }
 
-  /* Pontinhos */
   .dots {
-    position:absolute;
-    bottom:15px;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    gap:10px;
-    z-index:10;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
   }
 
   .dots button {
-    width:12px; height:12px;
-    border-radius:50%;
-    border:none;
-    background:rgba(255,255,255,0.5);
-    cursor:pointer;
-    transition:0.3s;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: 0.3s;
   }
 
   .dots button.is-active {
-    background:#ffd700;
-    transform:scale(1.2);
+    background: #fff;
+    transform: scale(1.2);
   }
 
-  @media(max-width:768px){
-    .phrase h1 { font-size:2rem; }
-    .phrase p { font-size:1rem; }
-    .phrase { padding:1.5rem 2rem; }
+  @media (max-width: 768px) {
+    .content h1 { font-size: 2rem; }
+    .content p { font-size: 1rem; }
   }
-
 </style>
 </head>
 <body>
 
 <div class="slider" id="slider">
-  <div class="slide is-active"><img src="slide1.jpeg" alt="Slide 1"></div>
-  <div class="slide">
-    <div class="phrase">
-      <div class="kicker">Decoração Criativa</div>
-      <h1>Festas que Encantam</h1>
-      <p>Balões, personagens e mesas decoradas para momentos inesquecíveis.</p>
+
+  <div class="slide is-active">
+    <img src="images/slide1.jpeg" alt="Decoração de Festa">
+    <div class="content">
+      <h1>Transformamos Sonhos em Realidade</h1>
+      <p>Da ideia à execução, criamos festas que emocionam e ficam na memória de quem vive cada momento.</p>
     </div>
   </div>
-  <div class="slide"><img src="slide2.jpeg" alt="Slide 2"></div>
+
   <div class="slide">
-    <div class="phrase">
-      <div class="kicker">Momentos Únicos</div>
-      <h1>Decoração Personalizada</h1>
-      <p>Transformamos sua festa em uma experiência mágica e inesquecível!</p>
+    <img src="images/slide2.jpeg" alt="Decoração Infantil">
+    <div class="content">
+      <h1>Detalhes que Encantam</h1>
+      <p>Cada cor, cada laço e cada flor são pensados para tornar sua celebração única e inesquecível.</p>
     </div>
   </div>
-  <div class="slide"><img src="slide3.jpeg" alt="Slide 3"></div>
+
+  <div class="slide">
+    <img src="images/slide3.jpeg" alt="Festa Personalizada">
+    <div class="content">
+      <h1>Festas com Identidade</h1>
+      <p>Decorações personalizadas que refletem o estilo e a essência de cada cliente.</p>
+    </div>
+  </div>
 
   <div class="nav">
     <button id="prev">◀</button>
@@ -196,37 +189,43 @@ let index = 0;
 let interval;
 
 // Criar dots
-slides.forEach((_, i)=>{
+slides.forEach((_, i) => {
   const dot = document.createElement('button');
-  if(i===0) dot.classList.add('is-active');
-  dot.addEventListener('click', ()=> goToSlide(i));
+  if (i === 0) dot.classList.add('is-active');
+  dot.addEventListener('click', () => goToSlide(i));
   dotsContainer.appendChild(dot);
 });
 const dots = dotsContainer.querySelectorAll('button');
 
-// Mostrar slide
-function showSlide(i){
-  slides.forEach((s, idx)=>{
-    s.classList.toggle('is-active', idx===i);
-    dots[idx].classList.toggle('is-active', idx===i);
+function showSlide(i) {
+  slides.forEach((s, idx) => {
+    s.classList.toggle('is-active', idx === i);
+    dots[idx].classList.toggle('is-active', idx === i);
   });
 }
 
-// Próximo/Anterior
-function nextSlide(){ index=(index+1)%slides.length; showSlide(index);}
-function prevSlide(){ index=(index-1+slides.length)%slides.length; showSlide(index);}
-function goToSlide(i){ index=i; showSlide(index); resetInterval(); }
+function nextSlide() {
+  index = (index + 1) % slides.length;
+  showSlide(index);
+}
+function prevSlide() {
+  index = (index - 1 + slides.length) % slides.length;
+  showSlide(index);
+}
+function goToSlide(i) {
+  index = i;
+  showSlide(index);
+  resetInterval();
+}
 
-// Botões
-prevBtn.addEventListener('click', ()=>{ prevSlide(); resetInterval(); });
-nextBtn.addEventListener('click', ()=>{ nextSlide(); resetInterval(); });
+prevBtn.addEventListener('click', () => { prevSlide(); resetInterval(); });
+nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
 
-// Auto play
-function startAuto(){ interval = setInterval(nextSlide, 4000); }
-function resetInterval(){ clearInterval(interval); startAuto(); }
+function startAuto() { interval = setInterval(nextSlide, 5000); }
+function resetInterval() { clearInterval(interval); startAuto(); }
+
 startAuto();
 </script>
 
 </body>
 </html>
-
