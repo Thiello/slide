@@ -126,19 +126,16 @@
     .text-overlay p {
       opacity: 0;
       filter: blur(10px);
-      animation: blurToSharp 4s ease-in-out forwards;
     }
 
     .text-overlay h1 {
       font-size: 2.5rem;
       margin: 0;
-      animation-delay: 0.5s;
     }
 
     .text-overlay p {
       font-size: 1.2rem;
       margin-top: 15px;
-      animation-delay: 1.5s;
     }
 
     @keyframes blurToSharp {
@@ -188,10 +185,14 @@
     const slider = document.getElementById('slider');
     const background = document.getElementById('background');
     const textOverlay = document.getElementById('textOverlay');
+    const textH1 = textOverlay.querySelector('h1');
+    const textP = textOverlay.querySelector('p');
 
     function showGroup(index) {
       slider.innerHTML = '';
       textOverlay.style.display = 'none';
+      textH1.style.animation = '';
+      textP.style.animation = '';
 
       const start = index * groupSize;
       const groupImages = imagePaths.slice(start, start + groupSize);
@@ -218,6 +219,8 @@
       slider.appendChild(finalImg);
 
       textOverlay.style.display = 'block';
+      textH1.style.animation = 'blurToSharp 4s ease-in-out forwards';
+      textP.style.animation = 'blurToSharp 4s ease-in-out forwards';
     }
 
     function nextGroup() {
