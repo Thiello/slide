@@ -116,7 +116,6 @@
       top: 10%;
       width: 100%;
       text-align: center;
-      color: #fff;
       z-index: 2;
     }
 
@@ -129,7 +128,11 @@
       border-right: 2px solid #fff;
       width: 0;
       animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
-      text-shadow: 0 0 10px rgba(255,255,255,0.6);
+      background: linear-gradient(270deg, #ff69b4, #87cefa, #ff69b4);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     .text-overlay p {
