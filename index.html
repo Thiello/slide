@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galeria Adrea Leal Festas</title>
+<title>Galeria Flutuante - Adrea Leal Festas</title>
 <style>
   * {
     margin: 0;
@@ -12,94 +12,65 @@
   }
 
   body {
-    font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #ffe3ec, #fff);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
     height: 100vh;
-    overflow: hidden;
-  }
-
-  /* Moldura com efeito de vidro */
-  .slider-container {
-    position: relative;
-    width: 90vw;
-    height: 80vh;
-    overflow: hidden;
-    border-radius: 25px;
-    backdrop-filter: blur(15px);
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-  }
-
-  /* Área interna de slides */
-  .slider {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 1s ease-in-out;
-  }
-
-  .slide {
-    min-width: 100%;
-    height: 100%;
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Poppins', sans-serif;
   }
 
-  .slide img {
+  /* Container da galeria */
+  .gallery {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    perspective: 1000px;
+    overflow: hidden;
+  }
+
+  /* Cada quadro */
+  .frame {
+    position: absolute;
+    width: 280px;
+    height: 180px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transform: rotateY(0deg) rotateX(0deg);
+    animation: float 25s infinite linear;
+  }
+
+  /* Imagens dentro do quadro */
+  .frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 25px;
-    transition: transform 1.5s ease, opacity 1s ease;
+    border-radius: 15px;
+    opacity: 0.95;
   }
 
-  /* Efeito de zoom leve e fade */
-  .slide.active img {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-
-  .slide:not(.active) img {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-
-  /* Botões de navegação transparentes */
-  .buttons {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-    z-index: 10;
-    pointer-events: none;
-  }
-
-  .buttons button {
-    pointer-events: all;
-    background: rgba(255, 255, 255, 0.15);
-    border: none;
-    color: #fff;
-    font-size: 2rem;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    margin: 0 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
-  }
-
-  .buttons button:hover {
-    background: rgba(255, 255, 255, 0.4);
-    color: #000;
+  /* Animação dos quadros flutuando */
+  @keyframes float {
+    0% {
+      transform: translateY(0) translateX(0) rotateY(0deg) rotateX(0deg);
+    }
+    25% {
+      transform: translateY(-40px) translateX(20px) rotateY(10deg) rotateX(8deg);
+    }
+    50% {
+      transform: translateY(30px) translateX(-30px) rotateY(-10deg) rotateX(-5deg);
+    }
+    75% {
+      transform: translateY(-20px) translateX(25px) rotateY(5deg) rotateX(-10deg);
+    }
+    100% {
+      transform: translateY(0) translateX(0) rotateY(0deg) rotateX(0deg);
+    }
   }
 
   /* Ícone do Instagram */
@@ -107,9 +78,9 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 50px;
-    height: 50px;
-    z-index: 15;
+    width: 60px;
+    height: 60px;
+    z-index: 20;
   }
 
   .instagram img {
@@ -125,95 +96,52 @@
 
   /* Responsivo */
   @media (max-width: 768px) {
-    .slider-container {
-      width: 95vw;
-      height: 70vh;
+    .frame {
+      width: 180px;
+      height: 120px;
     }
-
-    .buttons button {
+    .instagram {
       width: 45px;
       height: 45px;
-      font-size: 1.5rem;
-    }
-
-    .instagram {
-      width: 40px;
-      height: 40px;
     }
   }
 </style>
 </head>
 <body>
 
-  <div class="slider-container">
-    <div class="slider" id="slider">
-      <div class="slide active"><img src="slide1.jpeg" alt="Decoração 1"></div>
-      <div class="slide"><img src="slide2.jpeg" alt="Decoração 2"></div>
-      <div class="slide"><img src="slide3.jpeg" alt="Decoração 3"></div>
-      <div class="slide"><img src="slide4.jpeg" alt="Decoração 4"></div>
-      <div class="slide"><img src="slide5.jpeg" alt="Decoração 5"></div>
-      <div class="slide"><img src="slide6.jpeg" alt="Decoração 6"></div>
-      <div class="slide"><img src="slide7.jpeg" alt="Decoração 7"></div>
-      <div class="slide"><img src="slide8.jpeg" alt="Decoração 8"></div>
-      <div class="slide"><img src="slide9.jpeg" alt="Decoração 9"></div>
-      <div class="slide"><img src="slide10.jpeg" alt="Decoração 10"></div>
-      <div class="slide"><img src="slide11.jpeg" alt="Decoração 11"></div>
-     
-    </div>
-
-    <div class="buttons">
-      <button id="prev">⟨</button>
-      <button id="next">⟩</button>
-    </div>
-
-    <a href="https://www.instagram.com/andrealealfestas?igsh=MW1lMGdpYmw1ZXhueQ==" target="_blank" class="instagram">
-      <img src="instagram.png" alt="Instagram">
-    </a>
+  <div class="gallery" id="gallery">
+    <!-- As imagens serão geradas via JavaScript -->
   </div>
 
+  <a href="https://www.instagram.com/andrealealfestas?igsh=MW1lMGdpYmw1ZXhueQ==" target="_blank" class="instagram">
+    <img src="instagram.png" alt="Instagram">
+  </a>
+
 <script>
-  const slider = document.getElementById('slider');
-  const slides = document.querySelectorAll('.slide');
-  let currentIndex = 0;
-  let interval;
+  const gallery = document.getElementById('gallery');
+  const totalFrames = 20; // quantidade de imagens
+  const images = [];
 
-  function updateSlider() {
-    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-    slides.forEach((s, i) => s.classList.toggle('active', i === currentIndex));
+  for (let i = 1; i <= totalFrames; i++) {
+    images.push(`slide${i}.jpeg`);
   }
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateSlider();
-  }
+  images.forEach((src, index) => {
+    const frame = document.createElement('div');
+    frame.classList.add('frame');
+    frame.style.top = Math.random() * 80 + '%';
+    frame.style.left = Math.random() * 90 + '%';
+    frame.style.animationDelay = (Math.random() * 20) + 's';
+    frame.style.animationDuration = (20 + Math.random() * 10) + 's';
+    frame.style.transform = `rotateY(${Math.random() * 20 - 10}deg) rotateX(${Math.random() * 10 - 5}deg)`;
 
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlider();
-  }
+    const img = document.createElement('img');
+    img.src = src;
+    frame.appendChild(img);
 
-  document.getElementById('next').addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
+    gallery.appendChild(frame);
   });
-
-  document.getElementById('prev').addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-  });
-
-  function startAuto() {
-    interval = setInterval(nextSlide, 3000); // muda a cada 3 segundos
-  }
-
-  function resetInterval() {
-    clearInterval(interval);
-    startAuto();
-  }
-
-  startAuto();
 </script>
 
 </body>
 </html>
-
