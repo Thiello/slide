@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galeria Vertical - Adrea Leal Festas</title>
+<title>Galeria Adrea Leal Festas</title>
 <style>
   * {
     margin: 0;
@@ -13,34 +13,39 @@
 
   body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(180deg, #ffe3ec, #fff);
+    background: linear-gradient(135deg, #ffe3ec, #fff);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
   }
 
-  /* Área principal do slider */
+  /* Moldura com efeito de vidro */
   .slider-container {
     position: relative;
-    width: 500px;         /* proporção aproximada 1080x1920 */
-    height: 900px;
+    width: 90vw;
+    height: 80vh;
     overflow: hidden;
     border-radius: 25px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-    background-color: #fff;
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
   }
 
-  /* Área interna com as imagens empilhadas */
+  /* Área interna de slides */
   .slider {
     display: flex;
-    flex-direction: column;
+    width: 100%;
     height: 100%;
     transition: transform 1s ease-in-out;
   }
 
   .slide {
-    min-height: 100%;
+    min-width: 100%;
+    height: 100%;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,38 +56,50 @@
     height: 100%;
     object-fit: cover;
     border-radius: 25px;
+    transition: transform 1.5s ease, opacity 1s ease;
+  }
+
+  /* Efeito de zoom leve e fade */
+  .slide.active img {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  .slide:not(.active) img {
+    transform: scale(1);
+    opacity: 0.7;
   }
 
   /* Botões de navegação transparentes */
   .buttons {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
     width: 100%;
-    height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    z-index: 5;
+    transform: translateY(-50%);
+    z-index: 10;
     pointer-events: none;
   }
 
   .buttons button {
     pointer-events: all;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     border: none;
     color: #fff;
     font-size: 2rem;
     border-radius: 50%;
-    margin: 15px auto;
     width: 60px;
     height: 60px;
+    margin: 0 20px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
   }
 
   .buttons button:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.4);
+    color: #000;
   }
 
   /* Ícone do Instagram */
@@ -92,7 +109,7 @@
     right: 20px;
     width: 50px;
     height: 50px;
-    z-index: 10;
+    z-index: 15;
   }
 
   .instagram img {
@@ -106,18 +123,17 @@
     transform: scale(1.2);
   }
 
-  /* Responsivo para celulares */
-  @media (max-width: 600px) {
+  /* Responsivo */
+  @media (max-width: 768px) {
     .slider-container {
-      width: 90vw;
-      height: 80vh;
-      border-radius: 20px;
+      width: 95vw;
+      height: 70vh;
     }
 
     .buttons button {
-      width: 50px;
-      height: 50px;
-      font-size: 1.6rem;
+      width: 45px;
+      height: 45px;
+      font-size: 1.5rem;
     }
 
     .instagram {
@@ -130,10 +146,8 @@
 <body>
 
   <div class="slider-container">
-
-    <!-- Slider -->
     <div class="slider" id="slider">
-      <div class="slide"><img src="slide1.jpeg" alt="Decoração 1"></div>
+      <div class="slide active"><img src="slide1.jpeg" alt="Decoração 1"></div>
       <div class="slide"><img src="slide2.jpeg" alt="Decoração 2"></div>
       <div class="slide"><img src="slide3.jpeg" alt="Decoração 3"></div>
       <div class="slide"><img src="slide4.jpeg" alt="Decoração 4"></div>
@@ -144,20 +158,25 @@
       <div class="slide"><img src="slide9.jpeg" alt="Decoração 9"></div>
       <div class="slide"><img src="slide10.jpeg" alt="Decoração 10"></div>
       <div class="slide"><img src="slide11.jpeg" alt="Decoração 11"></div>
-
+      <div class="slide"><img src="slide12.jpeg" alt="Decoração 12"></div>
+      <div class="slide"><img src="slide13.jpeg" alt="Decoração 13"></div>
+      <div class="slide"><img src="slide14.jpeg" alt="Decoração 14"></div>
+      <div class="slide"><img src="slide15.jpeg" alt="Decoração 15"></div>
+      <div class="slide"><img src="slide16.jpeg" alt="Decoração 16"></div>
+      <div class="slide"><img src="slide17.jpeg" alt="Decoração 17"></div>
+      <div class="slide"><img src="slide18.jpeg" alt="Decoração 18"></div>
+      <div class="slide"><img src="slide19.jpeg" alt="Decoração 19"></div>
+      <div class="slide"><img src="slide20.jpeg" alt="Decoração 20"></div>
     </div>
 
-    <!-- Botões -->
     <div class="buttons">
-      <button id="prev">▲</button>
-      <button id="next">▼</button>
+      <button id="prev">⟨</button>
+      <button id="next">⟩</button>
     </div>
 
-    <!-- Instagram -->
     <a href="https://www.instagram.com/andrealealfestas?igsh=MW1lMGdpYmw1ZXhueQ==" target="_blank" class="instagram">
       <img src="instagram.png" alt="Instagram">
     </a>
-
   </div>
 
 <script>
@@ -167,7 +186,8 @@
   let interval;
 
   function updateSlider() {
-    slider.style.transform = `translateY(-${currentIndex * 100}%)`;
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    slides.forEach((s, i) => s.classList.toggle('active', i === currentIndex));
   }
 
   function nextSlide() {
@@ -191,7 +211,7 @@
   });
 
   function startAuto() {
-    interval = setInterval(nextSlide, 3000); // 3 segundos
+    interval = setInterval(nextSlide, 3000); // muda a cada 3 segundos
   }
 
   function resetInterval() {
