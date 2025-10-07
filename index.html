@@ -18,6 +18,24 @@
       align-items: center;
       overflow: hidden;
       font-family: sans-serif;
+      position: relative;
+    }
+
+    /* Ícone do Instagram */
+    .instagram-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      z-index: 10;
+    }
+
+    .instagram-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      cursor: pointer;
     }
 
     .slider {
@@ -31,10 +49,12 @@
       position: absolute;
       width: 100%;
       height: 100%;
+      padding-top: 10px;
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: flex-start;
       align-items: center;
+      gap: 15px;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
@@ -45,7 +65,7 @@
 
     .slide-group img {
       width: 90%;
-      max-height: 30%;
+      max-height: 28%;
       object-fit: cover;
       border-radius: 10px;
       opacity: 0;
@@ -68,6 +88,11 @@
   </style>
 </head>
 <body>
+  <!-- Ícone do Instagram -->
+  <a href="https://www.instagram.com/andrealealfestas?igsh=MW1lMGdpYmw1ZXhueQ==" target="_blank" class="instagram-icon">
+    <img src="instagram.png" alt="Instagram">
+  </a>
+
   <div class="slider" id="slider"></div>
 
   <script>
