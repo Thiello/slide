@@ -119,20 +119,26 @@
       color: #fff;
       z-index: 2;
       text-shadow: 0 0 10px rgba(0,0,0,0.8);
+      display: none;
+    }
+
+    .text-overlay h1,
+    .text-overlay p {
       opacity: 0;
-      animation: blurToSharp 6s ease-in-out forwards;
+      filter: blur(10px);
+      animation: blurToSharp 4s ease-in-out forwards;
     }
 
     .text-overlay h1 {
       font-size: 2.5rem;
       margin: 0;
-      filter: blur(10px);
+      animation-delay: 0.5s;
     }
 
     .text-overlay p {
       font-size: 1.2rem;
       margin-top: 15px;
-      filter: blur(10px);
+      animation-delay: 1.5s;
     }
 
     @keyframes blurToSharp {
@@ -141,16 +147,13 @@
         transform: translateY(-20px);
         filter: blur(10px);
       }
-      20% {
+      30% {
         opacity: 1;
         transform: translateY(0);
         filter: blur(6px);
       }
-      50% {
+      60% {
         filter: blur(3px);
-      }
-      80% {
-        filter: blur(1px);
       }
       100% {
         opacity: 1;
@@ -188,7 +191,7 @@
 
     function showGroup(index) {
       slider.innerHTML = '';
-      textOverlay.style.opacity = '0';
+      textOverlay.style.display = 'none';
 
       const start = index * groupSize;
       const groupImages = imagePaths.slice(start, start + groupSize);
@@ -214,7 +217,7 @@
       finalImg.classList.add('final-slide');
       slider.appendChild(finalImg);
 
-      textOverlay.style.animation = 'blurToSharp 6s ease-in-out forwards';
+      textOverlay.style.display = 'block';
     }
 
     function nextGroup() {
