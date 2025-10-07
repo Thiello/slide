@@ -1,147 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galeria Flutuante - Adrea Leal Festas</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    background: linear-gradient(135deg, #ffe3ec, #fff);
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  /* Container da galeria */
-  .gallery {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    perspective: 1000px;
-    overflow: hidden;
-  }
-
-  /* Cada quadro */
-  .frame {
-    position: absolute;
-    width: 280px;
-    height: 180px;
-    border-radius: 15px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    transform: rotateY(0deg) rotateX(0deg);
-    animation: float 25s infinite linear;
-  }
-
-  /* Imagens dentro do quadro */
-  .frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
-    opacity: 0.95;
-  }
-
-  /* Animação dos quadros flutuando */
-  @keyframes float {
-    0% {
-      transform: translateY(0) translateX(0) rotateY(0deg) rotateX(0deg);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adrea Leal Festas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    25% {
-      transform: translateY(-40px) translateX(20px) rotateY(10deg) rotateX(8deg);
-    }
-    50% {
-      transform: translateY(30px) translateX(-30px) rotateY(-10deg) rotateX(-5deg);
-    }
-    75% {
-      transform: translateY(-20px) translateX(25px) rotateY(5deg) rotateX(-10deg);
-    }
-    100% {
-      transform: translateY(0) translateX(0) rotateY(0deg) rotateX(0deg);
-    }
-  }
 
-  /* Ícone do Instagram */
-  .instagram {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    z-index: 20;
-  }
-
-  .instagram img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-  }
-
-  .instagram img:hover {
-    transform: scale(1.2);
-  }
-
-  /* Responsivo */
-  @media (max-width: 768px) {
-    .frame {
-      width: 180px;
-      height: 120px;
+    body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(1);
+      transition: opacity 2s ease, transform 8s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
     .instagram {
-      width: 45px;
-      height: 45px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      z-index: 10;
+      opacity: 0.8;
     }
-  }
-</style>
+
+    .instagram:hover {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="gallery" id="gallery">
-    <!-- As imagens serão geradas via JavaScript -->
-  </div>
-
-  <a href="https://www.instagram.com/andrealealfestas?igsh=MW1lMGdpYmw1ZXhueQ==" target="_blank" class="instagram">
-    <img src="instagram.png" alt="Instagram">
+  <a href="https://www.instagram.com/adrealealfestas" target="_blank">
+    <img src="instagram.png" alt="Instagram" class="instagram">
   </a>
 
-<script>
-  const gallery = document.getElementById('gallery');
-  const totalFrames = 20; // quantidade de imagens
-  const images = [];
+  <div class="slide active" style="background-image: url('slide1.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide2.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide3.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide4.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide5.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide6.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide7.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide8.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide9.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide10.jpeg');"></div>
+  <div class="slide" style="background-image: url('slide11.jpeg');"></div>
 
-  for (let i = 1; i <= totalFrames; i++) {
-    images.push(`slide${i}.jpeg`);
-  }
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
 
-  images.forEach((src, index) => {
-    const frame = document.createElement('div');
-    frame.classList.add('frame');
-    frame.style.top = Math.random() * 80 + '%';
-    frame.style.left = Math.random() * 90 + '%';
-    frame.style.animationDelay = (Math.random() * 20) + 's';
-    frame.style.animationDuration = (20 + Math.random() * 10) + 's';
-    frame.style.transform = `rotateY(${Math.random() * 20 - 10}deg) rotateX(${Math.random() * 10 - 5}deg)`;
+    function nextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }
 
-    const img = document.createElement('img');
-    img.src = src;
-    frame.appendChild(img);
-
-    gallery.appendChild(frame);
-  });
-</script>
+    setInterval(nextSlide, 4000); // troca a cada 4 segundos
+  </script>
 
 </body>
 </html>
