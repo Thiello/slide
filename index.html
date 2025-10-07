@@ -27,9 +27,9 @@
       height: 100%;
       background-position: center;
       background-size: cover;
-      filter: blur(8px) brightness(0.7); /* menos blur, mais brilho */
+      filter: blur(8px) brightness(0.7);
       z-index: 0;
-      transition: background-image 1s ease-in-out;
+      transition: background-image 1.5s ease;
     }
 
     /* Ícone do Instagram fixo */
@@ -69,18 +69,11 @@
       border-radius: 10px;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 2s ease;
     }
 
     .slide.active {
       opacity: 1;
-      animation: fadeIn 1s forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
     }
   </style>
 </head>
@@ -117,132 +110,7 @@
     function nextSlide() {
       showSlide(currentIndex);
       currentIndex = (currentIndex + 1) % imagePaths.length;
-      setTimeout(nextSlide, 5000);
-    }
-
-    nextSlide();
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slide com Fundo Desfocado</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #000;
-      overflow: hidden;
-      font-family: sans-serif;
-      position: relative;
-    }
-
-    /* Fundo desfocado */
-    .background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-position: center;
-      background-size: cover;
-      filter: blur(8px) brightness(0.7); /* menos blur, mais brilho */
-      z-index: 0;
-      transition: background-image 1s ease-in-out;
-    }
-
-    /* Ícone do Instagram fixo */
-    .instagram-icon {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 40px;
-      height: 40px;
-      z-index: 999;
-    }
-
-    .instagram-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      cursor: pointer;
-    }
-
-    /* Slide principal */
-    .slider {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      height: 100%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-    }
-
-    .slide {
-      position: absolute;
-      width: 90%;
-      max-height: 80%;
-      border-radius: 10px;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .slide.active {
-      opacity: 1;
-      animation: fadeIn 1s forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- Ícone do Instagram -->
-  <a href="https://www.instagram.com/andrealealfestas?igsh=MW1lMGdpYmw1ZXhueQ==" target="_blank" class="instagram-icon">
-    <img src="instagram.png" alt="Instagram">
-  </a>
-
-  <!-- Fundo desfocado -->
-  <div class="background" id="background"></div>
-
-  <!-- Slide principal -->
-  <div class="slider" id="slider"></div>
-
-  <script>
-    const totalSlides = 11;
-    const imagePaths = Array.from({ length: totalSlides }, (_, i) => `slide${i + 1}.jpeg`);
-    let currentIndex = 0;
-
-    const slider = document.getElementById('slider');
-    const background = document.getElementById('background');
-
-    function showSlide(index) {
-      slider.innerHTML = '';
-      const img = document.createElement('img');
-      img.src = imagePaths[index];
-      img.classList.add('slide', 'active');
-      slider.appendChild(img);
-
-      background.style.backgroundImage = `url(${imagePaths[index]})`;
-    }
-
-    function nextSlide() {
-      showSlide(currentIndex);
-      currentIndex = (currentIndex + 1) % imagePaths.length;
-      setTimeout(nextSlide, 5000);
+      setTimeout(nextSlide, 6000); // tempo total entre trocas
     }
 
     nextSlide();
