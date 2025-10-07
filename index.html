@@ -20,9 +20,27 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      font-family: 'Poppins', sans-serif;
     }
 
+    /* Cada slide ocupa a tela toda */
     .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    /* Fundo desfocado */
+    .slide::before {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -30,28 +48,57 @@
       height: 100%;
       background-size: cover;
       background-position: center;
-      opacity: 0;
-      transform: scale(1);
-      transition: opacity 2s ease, transform 8s ease;
+      filter: blur(25px) brightness(0.5);
+      transform: scale(1.2);
+      z-index: 1;
     }
 
-    .slide.active {
-      opacity: 1;
-      transform: scale(1.1);
+    /* Imagem nítida centralizada */
+    .slide img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 90%;
+      height: auto;
+      max-height: 80%;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 2;
+      transition: transform 8s ease;
     }
 
+    .slide.active img {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    /* Ícone do Instagram */
     .instagram {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 40px;
-      height: 40px;
+      top: 15px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
       z-index: 10;
       opacity: 0.8;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .instagram:hover {
       opacity: 1;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 600px) {
+      .slide img {
+        width: 95%;
+        border-radius: 15px;
+      }
+
+      .instagram {
+        width: 40px;
+        height: 40px;
+      }
     }
   </style>
 </head>
@@ -61,21 +108,56 @@
     <img src="instagram.png" alt="Instagram" class="instagram">
   </a>
 
-  <div class="slide active" style="background-image: url('slide1.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide2.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide3.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide4.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide5.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide6.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide7.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide8.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide9.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide10.jpeg');"></div>
-  <div class="slide" style="background-image: url('slide11.jpeg');"></div>
+  <!-- Slides -->
+  <div class="slide active" style="--img:url('slide1.jpeg');">
+    <img src="slide1.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide2.jpeg');">
+    <img src="slide2.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide3.jpeg');">
+    <img src="slide3.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide4.jpeg');">
+    <img src="slide4.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide5.jpeg');">
+    <img src="slide5.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide6.jpeg');">
+    <img src="slide6.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide7.jpeg');">
+    <img src="slide7.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide8.jpeg');">
+    <img src="slide8.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide9.jpeg');">
+    <img src="slide9.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide10.jpeg');">
+    <img src="slide10.jpeg" alt="">
+  </div>
+  <div class="slide" style="--img:url('slide11.jpeg');">
+    <img src="slide11.jpeg" alt="">
+  </div>
 
   <script>
     const slides = document.querySelectorAll('.slide');
     let current = 0;
+
+    // Aplica a imagem de fundo desfocada
+    slides.forEach(slide => {
+      const imgUrl = slide.getAttribute('style').match(/url\('(.*?)'\)/)[1];
+      slide.querySelector('img').src = imgUrl;
+      slide.style.setProperty('--img', `url(${imgUrl})`);
+      slide.querySelector('::before');
+      slide.style.setProperty('--bg', imgUrl);
+      slide.style.setProperty('background-image', `url(${imgUrl})`);
+      slide.querySelector(':before');
+      slide.style.backgroundImage = `url(${imgUrl})`;
+    });
 
     function nextSlide() {
       slides[current].classList.remove('active');
@@ -83,7 +165,7 @@
       slides[current].classList.add('active');
     }
 
-    setInterval(nextSlide, 4000); // troca a cada 4 segundos
+    setInterval(nextSlide, 5000); // troca a cada 5 segundos
   </script>
 
 </body>
