@@ -119,7 +119,8 @@
       color: #fff;
       z-index: 2;
       text-shadow: 0 0 10px rgba(0,0,0,0.8);
-      animation: fadeText 2s ease-in-out forwards;
+      opacity: 0;
+      animation: textFade 6s ease-in-out forwards;
     }
 
     .text-overlay h1 {
@@ -132,15 +133,11 @@
       margin-top: 15px;
     }
 
-    @keyframes fadeText {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes textFade {
+      0% { opacity: 0; transform: translateY(-20px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
     }
   </style>
 </head>
@@ -151,7 +148,7 @@
 
   <div class="background" id="background"></div>
   <div class="slider" id="slider"></div>
-  <div class="text-overlay" id="textOverlay" style="display: none;">
+  <div class="text-overlay" id="textOverlay">
     <h1>Andrea Leal Festas</h1>
     <p>Segue a gente no Instagram</p>
   </div>
@@ -173,7 +170,7 @@
 
     function showGroup(index) {
       slider.innerHTML = '';
-      textOverlay.style.display = 'none';
+      textOverlay.style.opacity = '0';
 
       const start = index * groupSize;
       const groupImages = imagePaths.slice(start, start + groupSize);
@@ -199,7 +196,7 @@
       finalImg.classList.add('final-slide');
       slider.appendChild(finalImg);
 
-      textOverlay.style.display = 'block';
+      textOverlay.style.animation = 'textFade 6s ease-in-out forwards';
     }
 
     function nextGroup() {
