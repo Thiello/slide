@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slide com Cubo Rotativo</title>
+  <title>Andrea Leal Festas</title>
   <style>
     * {
       box-sizing: border-box;
@@ -14,7 +14,7 @@
       height: 100vh;
       background: #000;
       overflow: hidden;
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       position: relative;
     }
 
@@ -87,6 +87,62 @@
         opacity: 1;
       }
     }
+
+    .final-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      animation: fadeIn 2s ease forwards;
+      border-radius: 0;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 10%;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      z-index: 2;
+      animation: fadeText 2s ease-in-out forwards;
+    }
+
+    .text-overlay h1 {
+      font-size: 2rem;
+      margin: 0;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+
+    .text-overlay p {
+      font-size: 1rem;
+      margin-top: 10px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+
+    @keyframes fadeText {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -96,20 +152,37 @@
 
   <div class="background" id="background"></div>
   <div class="slider" id="slider"></div>
+  <div class="text-overlay" id="textOverlay" style="display: none;">
+    <h1>Andrea Leal Festas</h1>
+    <p>Segue a gente no Instagram</p>
+  </div>
 
   <script>
-    const totalSlides = 12;
-    const imagePaths = Array.from({ length: totalSlides }, (_, i) => `slide${i + 1}.jpeg`);
+    const imagePaths = [
+      'slide1.jpeg', 'slide2.jpeg', 'slide3.jpeg',
+      'slide4.jpeg', 'slide5.jpeg', 'slide6.jpeg',
+      'slide7.jpeg', 'slide8.jpeg', 'slide9.jpeg',
+      'slide10.jpeg', 'slide11.jpeg'
+    ];
+    const finalImage = 'andrea.jpeg';
     const groupSize = 3;
     let currentGroup = 0;
 
     const slider = document.getElementById('slider');
     const background = document.getElementById('background');
+    const textOverlay = document.getElementById('textOverlay');
 
     function showGroup(index) {
       slider.innerHTML = '';
+      textOverlay.style.display = 'none';
+
       const start = index * groupSize;
       const groupImages = imagePaths.slice(start, start + groupSize);
+
+      if (groupImages.length === 0) {
+        showFinalSlide();
+        return;
+      }
 
       groupImages.forEach((src, i) => {
         const img = document.createElement('img');
@@ -119,22 +192,35 @@
         slider.appendChild(img);
       });
 
-      // Usa a imagem do meio como fundo, ou a primeira se só houver uma
       const bgIndex = groupImages[1] ? start + 1 : start;
       background.style.backgroundImage = `url(${imagePaths[bgIndex]})`;
+    }
+
+    function showFinalSlide() {
+      slider.innerHTML = '';
+      background.style.backgroundImage = `url(${finalImage})`;
+
+      const finalImg = document.createElement('img');
+      finalImg.src = finalImage;
+      finalImg.classList.add('final-slide');
+      slider.appendChild(finalImg);
+
+      textOverlay.style.display = 'block';
     }
 
     function nextGroup() {
       showGroup(currentGroup);
       currentGroup++;
-      if (currentGroup * groupSize >= imagePaths.length) {
-        currentGroup = 0;
-      }
-      setTimeout(nextGroup, 6000);
+      setTimeout(() => {
+        if (currentGroup * groupSize >= imagePaths.length) {
+          showFinalSlide();
+        } else {
+          nextGroup();
+        }
+      }, 6000);
     }
 
     nextGroup();
   </script>
 </body>
 </html>
-
