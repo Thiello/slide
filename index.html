@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slide com Efeito Cubo</title>
+  <title>Slide com Cubo Rotativo</title>
   <style>
     * {
       box-sizing: border-box;
@@ -54,16 +54,18 @@
       height: 100%;
       margin: 0 auto;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       perspective: 1000px;
       z-index: 1;
+      gap: 10px;
+      padding-top: 30px;
     }
 
     .slide {
-      position: absolute;
       width: 90%;
-      max-height: 80%;
+      max-height: 28%;
       border-radius: 10px;
       object-fit: cover;
       backface-visibility: hidden;
@@ -75,10 +77,6 @@
       animation: cubeIn 1s ease forwards;
     }
 
-    .slide.exit {
-      animation: cubeOut 1s ease forwards;
-    }
-
     @keyframes cubeIn {
       0% {
         transform: rotateX(90deg);
@@ -87,17 +85,6 @@
       100% {
         transform: rotateX(0deg);
         opacity: 1;
-      }
-    }
-
-    @keyframes cubeOut {
-      0% {
-        transform: rotateX(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: rotateX(-90deg);
-        opacity: 0;
       }
     }
   </style>
@@ -113,35 +100,40 @@
   <script>
     const totalSlides = 11;
     const imagePaths = Array.from({ length: totalSlides }, (_, i) => `slide${i + 1}.jpeg`);
-    let currentIndex = 0;
+    const groupSize = 3;
+    let currentGroup = 0;
+
     const slider = document.getElementById('slider');
     const background = document.getElementById('background');
 
-    function showSlide(index) {
-      const newImg = document.createElement('img');
-      newImg.src = imagePaths[index];
-      newImg.classList.add('slide', 'enter');
-      slider.appendChild(newImg);
+    function showGroup(index) {
+      slider.innerHTML = '';
+      const start = index * groupSize;
+      const groupImages = imagePaths.slice(start, start + groupSize);
 
-      background.style.backgroundImage = `url(${imagePaths[index]})`;
+      groupImages.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.classList.add('slide', 'enter');
+        img.style.animationDelay = `${i * 1}s`;
+        slider.appendChild(img);
+      });
 
-      const oldImg = slider.querySelector('.slide:not(.enter)');
-      if (oldImg) {
-        oldImg.classList.remove('enter');
-        oldImg.classList.add('exit');
-        setTimeout(() => {
-          slider.removeChild(oldImg);
-        }, 1000);
+      // Usa a imagem do meio como fundo, ou a primeira se só houver uma
+      const bgIndex = groupImages[1] ? start + 1 : start;
+      background.style.backgroundImage = `url(${imagePaths[bgIndex]})`;
+    }
+
+    function nextGroup() {
+      showGroup(currentGroup);
+      currentGroup++;
+      if (currentGroup * groupSize >= imagePaths.length) {
+        currentGroup = 0;
       }
+      setTimeout(nextGroup, 6000);
     }
 
-    function nextSlide() {
-      showSlide(currentIndex);
-      currentIndex = (currentIndex + 1) % imagePaths.length;
-      setTimeout(nextSlide, 6000);
-    }
-
-    nextSlide();
+    nextGroup();
   </script>
 </body>
 </html>
