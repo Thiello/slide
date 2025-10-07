@@ -120,24 +120,42 @@
       z-index: 2;
       text-shadow: 0 0 10px rgba(0,0,0,0.8);
       opacity: 0;
-      animation: textFade 6s ease-in-out forwards;
+      animation: blurToSharp 6s ease-in-out forwards;
     }
 
     .text-overlay h1 {
       font-size: 2.5rem;
       margin: 0;
+      filter: blur(10px);
     }
 
     .text-overlay p {
       font-size: 1.2rem;
       margin-top: 15px;
+      filter: blur(10px);
     }
 
-    @keyframes textFade {
-      0% { opacity: 0; transform: translateY(-20px); }
-      20% { opacity: 1; transform: translateY(0); }
-      80% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(20px); }
+    @keyframes blurToSharp {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        filter: blur(10px);
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(6px);
+      }
+      50% {
+        filter: blur(3px);
+      }
+      80% {
+        filter: blur(1px);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0);
+      }
     }
   </style>
 </head>
@@ -196,7 +214,7 @@
       finalImg.classList.add('final-slide');
       slider.appendChild(finalImg);
 
-      textOverlay.style.animation = 'textFade 6s ease-in-out forwards';
+      textOverlay.style.animation = 'blurToSharp 6s ease-in-out forwards';
     }
 
     function nextGroup() {
