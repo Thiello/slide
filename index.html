@@ -179,11 +179,6 @@
       const start = index * groupSize;
       const groupImages = imagePaths.slice(start, start + groupSize);
 
-      if (groupImages.length === 0) {
-        showFinalSlide();
-        return;
-      }
-
       groupImages.forEach((src, i) => {
         const img = document.createElement('img');
         img.src = src;
@@ -209,19 +204,19 @@
     }
 
     function nextGroup() {
-      showGroup(currentGroup);
-      currentGroup++;
-      setTimeout(() => {
-        if (currentGroup * groupSize >= imagePaths.length) {
-          showFinalSlide();
-        } else {
-          nextGroup();
-        }
-      }, 6000);
+      const start = currentGroup * groupSize;
+      const groupImages = imagePaths.slice(start, start + groupSize);
+
+      if (groupImages.length > 0) {
+        showGroup(currentGroup);
+        currentGroup++;
+        setTimeout(nextGroup, 6000);
+      } else {
+        showFinalSlide();
+      }
     }
 
     nextGroup();
   </script>
 </body>
 </html>
-
