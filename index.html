@@ -48,11 +48,13 @@
     }
 
     .slider {
+  .slider {
   position: relative;
   width: 100%;
   max-width: 400px;
   height: 100%;
   margin: 0 auto;
+  margin-top: -40px; /* move o grupo para cima desde o início */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,9 +62,7 @@
   perspective: 1000px;
   z-index: 1;
   gap: 10px;
-  transform: translateY(-20px); /* move o grupo para cima */
 }
-
 
     .slider.fade-transition {
       animation: fadeGroup 1s ease;
@@ -279,6 +279,7 @@
   </script>
 </body>
 </html>
+
 
 
 
