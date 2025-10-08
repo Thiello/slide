@@ -48,20 +48,21 @@
     }
 
     .slider {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      height: 100%;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      perspective: 1000px;
-      z-index: 1;
-      gap: 10px;
-      padding-top: 10px;
-    }
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  z-index: 1;
+  gap: 10px;
+  transform: translateY(-40px); /* move o grupo para cima */
+}
+
 
     .slider.fade-transition {
       animation: fadeGroup 1s ease;
@@ -278,4 +279,5 @@
   </script>
 </body>
 </html>
+
 
