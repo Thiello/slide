@@ -63,6 +63,21 @@
       padding-top: 30px;
     }
 
+    .slider.fade-transition {
+      animation: fadeGroup 1s ease;
+    }
+
+    @keyframes fadeGroup {
+      0% {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
     .slide {
       width: 90%;
       max-height: 28%;
@@ -205,6 +220,11 @@
     const textP = textOverlay.querySelector('p');
 
     function showGroup(index) {
+      slider.classList.add('fade-transition');
+      setTimeout(() => {
+        slider.classList.remove('fade-transition');
+      }, 1000);
+
       slider.innerHTML = '';
       textOverlay.style.display = 'none';
       textH1.style.animation = '';
